@@ -27,21 +27,21 @@ pipeline {
     stage('Build Docker Image') {
       agent any
       steps {
-        sh 'docker image build -t cccr-jmc/hello:latest'
+        sh 'docker image build -t jongminchoi/hello:latest'
       }
     }
     stage('Tag Docker Image') {
       agent any
       steps {
-        sh 'docker image tag cccr-jmc/hello:latest cccr-jmc/hello:$BUILD_NUMBER'
+        sh 'docker image tag jongminchoi/hello:latest jongminchoi/hello:$BUILD_NUMBER'
       }
     }
     stage('Publish Docker Image') {
       agent any
       steps {
         withDockerRegistry(credentialsId: 'docker-hub-token', url: 'https://index.docker.io/v1/') {
-          sh 'docker push cccr-jmc/hello:$BUILD_NUMBER'
-	  sh 'docker image push cccr-jmc/hello:latest'
+          sh 'docker push jongminchoi/hello:$BUILD_NUMBER'
+	  sh 'docker image push jongminchoi/hello:latest'
         }
       }
     }
@@ -50,7 +50,7 @@ pipeline {
         docker { image 'docker:dind' }
       }
       steps {
-        sh 'docker -H tcp://192.168.56.110:2375 container run --detach --name webserver -p 80:8080 cccr-jmc/hello:$BUILD_NUMBER'
+        sh 'docker -H tcp://192.168.56.110:2375 container run --detach --name webserver -p 80:8080 docker_token/hello:$BUILD_NUMBER'
       }
     }
   }
