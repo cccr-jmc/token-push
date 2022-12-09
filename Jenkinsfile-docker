@@ -33,7 +33,7 @@ pipeline {
     stage('Tag Docker Image') {
       agent any
       steps {
-        sh 'docker image tag cccr-jmc/hello:$BUILD_NUMBER'
+        sh 'docker image tag cccr-jmc/hello:latest cccr-jmc/hello:$BUILD_NUMBER'
       }
     }
     stage('Publish Docker Image') {
