@@ -41,7 +41,6 @@ pipeline {
       steps {
         withDockerRegistry(credentialsId: 'docker-hub-token', url: 'https://index.docker.io/v1/') {
           sh 'docker push jongminchoi/hello:$BUILD_NUMBER'
-	  sh 'docker image push jongminchoi/hello:latest'
         }
       }
     }
